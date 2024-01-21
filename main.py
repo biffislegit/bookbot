@@ -3,12 +3,16 @@ def main()-> None:
     file_contents = read_file(file_path)
     words_count = count_words(file_contents)
     letter_count = count_letters(file_contents)
-    final_report(words_count, letter_count)
-    print("ok")
-def final_report(words, letters):
-    print(f"\nBegin report of ./books/frankensetein\n\n"
-    print(words_count)
-    print(letter_count)
+    final_report(file_path, words_count, letter_count)
+
+
+def final_report(book, words, letters):
+    title = f"Begin report of {book}"
+    print(f"\n*** {title} ***")
+    print(f"{words} found in the document\n")
+    for letter, counts in letters:
+        print(f"The '{letter}' character was found {counts} times")
+    print("--- End Report ---")
 
 
 def read_file(file_path: str):
@@ -29,7 +33,8 @@ def count_letters(file_contents):
         if letter.isalpha() and letter not in letters:
             letters.append(letter)
     letter_count = {letter: lower_letters.count(letter) for letter in letters}
-    return letter_count
+    return sorted(letter_count.items(), key=lambda x: x[1], reverse=True)
+
 
 if __name__ == "__main__":
     main()
